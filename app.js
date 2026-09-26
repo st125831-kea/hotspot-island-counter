@@ -22,7 +22,10 @@ function analyzeSheet(){
   if(ilat<0||ilon<0){$("status").className="status err";$("status").textContent=T[lang].missing;return}
   let total=0,sumatra=0,borneo=0,otherId=0,idTotal=0; const bc={},oc={},rows=[];
   for(let r=1;r<aoa.length;r++){
-    const a=aoa[r], lat=Number(a[ilat]), lon=Number(a[ilon]);
+    const a=aoa[r];
+    const rawLat=a[ilat], rawLon=a[ilon];
+    if(rawLat===null||rawLat===undefined||rawLon===null||rawLon===undefined||String(rawLat).trim()===""||String(rawLon).trim()==="")continue;
+    const lat=Number(rawLat), lon=Number(rawLon);
     if(!Number.isFinite(lat)||!Number.isFinite(lon)||lat<-90||lat>90||lon<-180||lon>180)continue;
     total++;
     const country=keyCountry(ict>=0?a[ict]:"");
